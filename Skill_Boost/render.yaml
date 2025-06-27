@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: skillsboosthub
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: DB_USER
+        value: your_db_user
+      - key: DB_PASS
+        value: your_db_pass
+      - key: DB_HOST
+        value: your_db_host
+      - key: DB_NAME
+        value: your_db_name
+      - key: RAZORPAY_KEY_ID
+        value: your_razorpay_key
+      - key: RAZORPAY_KEY_SECRET
+        value: your_razorpay_secret
+      - key: GMAIL_USER
+        value: your_gmail_email
+      - key: GMAIL_PASSWORD
+        value: your_gmail_app_password

@@ -1,0 +1,11 @@
+<h2>Welcome, {{ user.name }}</h2>
+<h3>Your Purchased Courses</h3>
+<ul>
+  {% for course in purchased_courses %}
+    <li>
+      {{ course.title }} –
+      <a href="{{ url_for('static', filename='uploads/' + course.pdf_path) }}" target="_blank">View PDF</a> |
+      <a href="{{ course.session_link }}" target="_blank">Join Session</a>
+    </li>
+  {% endfor %}
+</ul>
