@@ -1,7 +1,7 @@
-Flask
+flask
+flask_mysqldb
 gunicorn
 Flask-SQLAlchemy
 psycopg2-binary
 razorpay
 python-dotenv
-flask_mysqldb
