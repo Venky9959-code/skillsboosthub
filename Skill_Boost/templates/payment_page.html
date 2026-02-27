@@ -1,0 +1,32 @@
+<!-- templates/payment_page.html -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<h2>Pay ₹{{ course[5] }} for {{ course[1] }}</h2>
+
+<button id="rzp-button">Pay Now</button>
+
+<script>
+var options = {
+    "key": "{{ key_id }}",
+    "amount": "{{ amount }}",
+    "currency": "INR",
+    "name": "SkillBoost Hub",
+    "description": "Course Purchase",
+    "order_id": "{{ order_id }}",
+    "handler": function (response) {
+        window.location.href = "/payment_success?payment_id=" + response.razorpay_payment_id;
+    },
+    "prefill": {
+        "name": "{{ user_name }}",
+        "email": "{{ user_email }}"
+    },
+    "theme": {
+        "color": "#528FF0"
+    }
+};
+var rzp1 = new Razorpay(options);
+document.getElementById("rzp-button").onclick = function(e) {
+    rzp1.open();
+    e.preventDefault();
+}
+</script>

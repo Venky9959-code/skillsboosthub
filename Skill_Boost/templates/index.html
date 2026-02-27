@@ -1,0 +1,27 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SkillBoost Hub</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>SkillBoost Hub</h1>
+    <p>Affordable Skill Courses for Every Student</p>
+    <a href="/login">Login</a> | <a href="/register">Register</a>
+  </header>
+
+  <section class="courses">
+    <h2>Available Courses (₹200 Each)</h2>
+    {% for course in courses %}
+      <div class="course-card">
+        <h3>{{ course.title }}</h3>
+        <p>{{ course.description }}</p>
+        <a href="/course/{{ course.id }}">View Course</a>
+      </div>
+    {% endfor %}
+  </section>
+</body>
+</html>

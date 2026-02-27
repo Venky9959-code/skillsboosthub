@@ -1,0 +1,6 @@
+<h2>{{ course.title }}</h2>
+<p>{{ course.description }}</p>
+<h3>Price: ₹200</h3>
+<form action="/pay/{{ course.id }}" method="POST">
+  <button type="submit">Buy Now</button>
+</form>
