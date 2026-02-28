@@ -4,20 +4,12 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-interface UserProfile {
-  role?: string;
-}
-
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { profile, loading } = useAuth() as {
-    profile: UserProfile | null;
-    loading: boolean;
-  };
-
+  const { profile, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
