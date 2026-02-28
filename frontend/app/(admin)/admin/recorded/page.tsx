@@ -1,7 +1,8 @@
+
 "use client";
 
-import { useAuth } from "../../../context/AuthContext";
-import { db } from "../../../firebase/firebaseConfig";
+import { useAuth } from "@/context/AuthContext";
+import { db } from "@/firebase/firebaseConfig";
 import {
   collection,
   getDocs,

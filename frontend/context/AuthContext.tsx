@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/firebase/firebaseConfig";
 
+
 type NotificationItem = {
   id: string;
   title: string;

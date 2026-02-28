@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/Ganesh/frontend/components/PageTransition.tsx"],"sourcesContent":["\"use client\";\r\n\r\nimport { motion, AnimatePresence } from \"framer-motion\";\r\nimport { usePathname } from \"next/navigation\";\r\n\r\nexport default function PageTransition({\r\n  children,\r\n}: {\r\n  children: React.ReactNode;\r\n}) {\r\n  const pathname = usePathname();\r\n\r\n  return (\r\n    <AnimatePresence mode=\"wait\">\r\n      <motion.div\r\n        key={pathname}\r\n        initial={{ opacity: 0, y: 20 }}\r\n        animate={{ opacity: 1, y: 0 }}\r\n        exit={{ opacity: 0, y: -12 }}\r\n        transition={{ duration: 0.35, ease: \"easeOut\" }}\r\n        className=\"h-full\"\r\n      >\r\n        {children}\r\n      </motion.div>\r\n    </AnimatePresence>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAEA;AAAA;AACA;;;AAHA;;;AAKe,SAAS,eAAe,EACrC,QAAQ,EAGT;;IACC,MAAM,WAAW,IAAA,oJAAW;IAE5B,qBACE,6LAAC,+MAAe;QAAC,MAAK;kBACpB,cAAA,6LAAC,uMAAM,CAAC,GAAG;YAET,SAAS;gBAAE,SAAS;gBAAG,GAAG;YAAG;YAC7B,SAAS;gBAAE,SAAS;gBAAG,GAAG;YAAE;YAC5B,MAAM;gBAAE,SAAS;gBAAG,GAAG,CAAC;YAAG;YAC3B,YAAY;gBAAE,UAAU;gBAAM,MAAM;YAAU;YAC9C,WAAU;sBAET;WAPI;;;;;;;;;;AAWb;GArBwB;;QAKL,oJAAW;;;KALN"}}]
+}

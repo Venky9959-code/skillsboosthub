@@ -25,11 +25,7 @@ const courses = [
   },
 ];
 
-export const metadata = {
-  title: "Courses",
-  description:
-    "Explore Web Development, AI, Data Science, and career-focused courses at SkillsBoostHub.",
-};
+
 
 
 
