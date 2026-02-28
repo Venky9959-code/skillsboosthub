@@ -2,17 +2,23 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { profile, loading } = useAuth();
   const router = useRouter();
 
-  if (loading) return null;
+  useEffect(() => {
+    if (!loading && profile?.role !== "admin") {
+      router.push("/dashboard");
+    }
+  }, [loading, profile, router]);
 
-  if (!user || user.role !== "admin") {
-    router.push("/dashboard"); // redirect users
-    return null;
-  }
+  if (loading || profile?.role !== "admin") return null;
 
   return <>{children}</>;
 }
