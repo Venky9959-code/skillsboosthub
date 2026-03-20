@@ -4,37 +4,51 @@ import { useEffect } from "react";
 
 export default function CursorGlow() {
   useEffect(() => {
-    // ❌ Disable on touch devices (important for mobile)
+    // Disable on touch devices
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+    let rafId: number;
+    let isActive = true;
 
     const handleMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
     };
 
+    const handleVisibility = () => {
+      isActive = !document.hidden;
+      if (isActive) animate();
+      else cancelAnimationFrame(rafId);
+    };
+
     const animate = () => {
-      // Smooth inertia (lerp)
-      currentX += (mouseX - currentX) * 0.12;
-      currentY += (mouseY - currentY) * 0.12;
+      if (!isActive) return;
+
+      // Smoother lerp
+      currentX += (mouseX - currentX) * 0.08;
+      currentY += (mouseY - currentY) * 0.08;
 
       document.documentElement.style.setProperty("--x", `${currentX}px`);
       document.documentElement.style.setProperty("--y", `${currentY}px`);
 
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
     };
 
     window.addEventListener("mousemove", handleMove);
+    document.addEventListener("visibilitychange", handleVisibility);
+
     animate();
 
     return () => {
       window.removeEventListener("mousemove", handleMove);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
-  return null; // visual fully controlled via CSS
+  return null;
 }

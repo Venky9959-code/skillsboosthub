@@ -5,10 +5,10 @@
   "static/chunks/node_modules_@firebase_auth_dist_esm_41d6d1e7._.js",
   "static/chunks/node_modules_@firebase_firestore_dist_index_esm_af799df8.js",
   "static/chunks/node_modules_@firebase_storage_dist_index_esm_00d833a2.js",
-  "static/chunks/node_modules_motion-dom_dist_es_da948acf._.js",
-  "static/chunks/node_modules_framer-motion_dist_es_247c3ff9._.js",
+  "static/chunks/node_modules_motion-dom_dist_es_6f3a54d0._.js",
+  "static/chunks/node_modules_framer-motion_dist_es_ce60c937._.js",
   "static/chunks/node_modules_a1549175._.js",
-  "static/chunks/[root-of-the-server]__c62c5a65._.js",
+  "static/chunks/[root-of-the-server]__614b4637._.js",
   "static/chunks/[root-of-the-server]__06dbc1e2._.css"
 ],
     source: "dynamic"

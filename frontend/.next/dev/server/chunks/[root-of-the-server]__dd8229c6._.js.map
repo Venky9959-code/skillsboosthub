@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///D:/Ganesh/frontend/app/api/razorpay/verify/route.ts"],"sourcesContent":["import { NextResponse } from \"next/server\";\r\nimport CryptoJS from \"crypto-js\";\r\n\r\nexport async function POST(req: Request) {\r\n  const body = await req.json();\r\n\r\n  const generatedSignature = CryptoJS.HmacSHA256(\r\n    body.razorpay_order_id + \"|\" + body.razorpay_payment_id,\r\n    process.env.RAZORPAY_KEY_SECRET!\r\n  ).toString();\r\n\r\n  if (generatedSignature === body.razorpay_signature) {\r\n    return NextResponse.json({ success: true });\r\n  }\r\n\r\n  return NextResponse.json({ success: false }, { status: 400 });\r\n}\r\n"],"names":[],"mappings":";;;;AAAA;AACA;;;AAEO,eAAe,KAAK,GAAY;IACrC,MAAM,OAAO,MAAM,IAAI,IAAI;IAE3B,MAAM,qBAAqB,kJAAQ,CAAC,UAAU,CAC5C,KAAK,iBAAiB,GAAG,MAAM,KAAK,mBAAmB,EACvD,QAAQ,GAAG,CAAC,mBAAmB,EAC/B,QAAQ;IAEV,IAAI,uBAAuB,KAAK,kBAAkB,EAAE;QAClD,OAAO,gJAAY,CAAC,IAAI,CAAC;YAAE,SAAS;QAAK;IAC3C;IAEA,OAAO,gJAAY,CAAC,IAAI,CAAC;QAAE,SAAS;IAAM,GAAG;QAAE,QAAQ;IAAI;AAC7D"}}]
+}

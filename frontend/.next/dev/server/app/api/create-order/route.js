@@ -1,6 +1,10 @@
 var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/create-order/route.js")
-R.c("server/chunks/node_modules_4261af07._.js")
-R.c("server/chunks/[root-of-the-server]__825447bb._.js")
-R.c("server/chunks/_next-internal_server_app_api_create-order_route_actions_25b0052e.js")
-R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/create-order/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
-module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/create-order/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports
+R.c("server/chunks/9e883_next_de3c52dd._.js")
+R.c("server/chunks/9e883_@opentelemetry_api_build_esm_8d36f10b._.js")
+R.c("server/chunks/9e883_mime-db_c600f368._.js")
+R.c("server/chunks/9e883_axios_dist_node_axios_cjs_bf76b38d._.js")
+R.c("server/chunks/9e883_62068475._.js")
+R.c("server/chunks/[root-of-the-server]__71f8a22a._.js")
+R.c("server/chunks/frontend__next-internal_server_app_api_create-order_route_actions_52bc8bc4.js")
+R.m("[project]/frontend/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/frontend/app/api/create-order/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/frontend/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/frontend/app/api/create-order/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

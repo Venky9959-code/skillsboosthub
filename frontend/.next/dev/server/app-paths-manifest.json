@@ -1,19 +1,8 @@
 {
   "/(public)/login/page": "app/(public)/login/page.js",
-  "/(public)/register/page": "app/(public)/register/page.js",
-  "/(user)/dashboard/courses/page": "app/(user)/dashboard/courses/page.js",
   "/(user)/dashboard/home/page": "app/(user)/dashboard/home/page.js",
-  "/(user)/dashboard/links/page": "app/(user)/dashboard/links/page.js",
-  "/(user)/dashboard/notifications/page": "app/(user)/dashboard/notifications/page.js",
   "/(user)/dashboard/page": "app/(user)/dashboard/page.js",
-  "/(user)/dashboard/payment/page": "app/(user)/dashboard/payment/page.js",
-  "/(user)/dashboard/pdfs/page": "app/(user)/dashboard/pdfs/page.js",
-  "/(user)/dashboard/profile/page": "app/(user)/dashboard/profile/page.js",
-  "/(user)/dashboard/recorded/page": "app/(user)/dashboard/recorded/page.js",
-  "/(user)/dashboard/videos/page": "app/(user)/dashboard/videos/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/create-order/route": "app/api/create-order/route.js",
-  "/api/notify/route": "app/api/notify/route.js",
-  "/api/razorpay/verify/route": "app/api/razorpay/verify/route.js",
+  "/api/login-alert/route": "app/api/login-alert/route.js",
   "/page": "app/page.js"
 }

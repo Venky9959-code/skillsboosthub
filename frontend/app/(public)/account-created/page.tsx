@@ -5,6 +5,14 @@ import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 
 export default function AccountCreatedPage() {
+
+  /* 🔥 MARK FIRST LOGIN */
+  const handleLoginRedirect = () => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("firstLoginAfterSignup", "true");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0A1220] to-[#020617] px-4">
 
@@ -44,6 +52,7 @@ export default function AccountCreatedPage() {
         <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }}>
           <Link
             href="/login"
+            onClick={handleLoginRedirect}
             className="block w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 hover:shadow-lg hover:shadow-blue-500/30 transition-all"
           >
             Go to Login

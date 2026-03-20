@@ -23,7 +23,6 @@ export default function RecordedClassesPage() {
   const [requestStatus, setRequestStatus] = useState<
     "pending" | "approved" | "rejected" | null
   >(null);
-  const [loadingRequest, setLoadingRequest] = useState(true);
 
   /* 🔐 AUTH GUARD */
   useEffect(() => {
@@ -34,24 +33,27 @@ export default function RecordedClassesPage() {
 
   const isPaid = profile?.paymentStatus === "paid";
 
-  /* 🔁 FETCH EXISTING REQUEST */
+  /* 🔁 FETCH EXISTING REQUEST (SAFE VERSION) */
   useEffect(() => {
     if (!user) return;
 
     const fetchRequest = async () => {
-      const q = query(
-        collection(db, "recordedRequests"),
-        where("uid", "==", user.uid)
-      );
-      const snap = await getDocs(q);
+      try {
+        const q = query(
+          collection(db, "recordedRequests"),
+          where("uid", "==", user.uid)
+        );
 
-      if (!snap.empty) {
-        const data = snap.docs[0].data();
-        setRequestStatus(data.status);
-        setSubmitted(true);
+        const snap = await getDocs(q);
+
+        if (!snap.empty) {
+          const data = snap.docs[0].data();
+          setRequestStatus(data.status);
+          setSubmitted(true);
+        }
+      } catch (error) {
+        console.error("Error fetching recorded request:", error);
       }
-
-      setLoadingRequest(false);
     };
 
     fetchRequest();
@@ -87,7 +89,8 @@ export default function RecordedClassesPage() {
     setRequestStatus("pending");
   };
 
-  if (loading || loadingRequest) {
+  /* ✅ ONLY WAIT FOR AUTH LOADING */
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-white">
         Loading recorded sessions...
@@ -96,70 +99,76 @@ export default function RecordedClassesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0A1220] to-[#020617] text-white p-6 md:p-10">
+    <div className="relative max-w-7xl mx-auto  px-6 md:px-10 pt-2 pb-12 text-white space-y-12">
 
       {/* HEADER */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mb-8"
+        className="mb-12"
       >
-        <h1 className="text-3xl md:text-4xl font-bold">
+        <h1 className="text-4xl font-bold">
           Recorded Classes 🎥
         </h1>
         <p className="text-gray-400 mt-2">
-          Watch sessions you missed — responsibly & meaningfully
+          Access missed sessions with approval
         </p>
       </motion.div>
 
-      {/* LOCKED INFO */}
+      {/* LOCKED BANNER */}
       {!isPaid && (
-        <div className="bg-yellow-400 text-black p-6 rounded-2xl mb-10 flex flex-col md:flex-row items-center justify-between shadow-lg">
-          <p className="font-semibold mb-4 md:mb-0">
-            🔒 Recorded sessions are available only after unlocking the course
-          </p>
-          <button
-            onClick={() => router.push("/dashboard/payment")}
-            className="bg-black text-white px-6 py-3 rounded-lg hover:opacity-90 transition"
-          >
-            Unlock Now
-          </button>
+        <div className="relative rounded-3xl p-[2px] bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 mb-12">
+          <div className="bg-[#0B1224] rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between">
+            <p className="font-semibold mb-4 md:mb-0">
+              🔒 Recorded sessions require premium access
+            </p>
+            <button
+              onClick={() => router.push("/dashboard/payment")}
+              className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-300 transition"
+            >
+              Unlock Now
+            </button>
+          </div>
         </div>
       )}
 
-      {/* VIDEOS GRID */}
+      {/* VIDEO GRID */}
       <div className="grid md:grid-cols-2 gap-8">
         {recordedVideos.map((video, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`bg-white/10 p-6 rounded-2xl border border-white/10 shadow-lg ${
-              requestStatus !== "approved" ? "opacity-50 blur-[1px]" : ""
-            }`}
+            className="relative group"
           >
-            <h3 className="text-xl font-semibold mb-1">
-              {video.title}
-            </h3>
-            <p className="text-gray-400 text-sm mb-4">
-              Uploaded on {video.date}
-            </p>
+            <div className="p-[1px] rounded-3xl bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30">
+              <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-6">
 
-            {requestStatus === "approved" ? (
-              <iframe
-                src={video.url}
-                className="w-full h-56 rounded-xl"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <div className="h-56 flex items-center justify-center bg-black/40 rounded-xl">
-                <span className="text-lg font-semibold">
-                  🔒 Awaiting Approval
-                </span>
+                <h3 className="text-xl font-semibold mb-1">
+                  {video.title}
+                </h3>
+                <p className="text-gray-400 text-sm mb-4">
+                  Uploaded on {video.date}
+                </p>
+
+                {requestStatus === "approved" ? (
+                  <iframe
+                    src={video.url}
+                    className="w-full h-56 rounded-xl"
+                    allowFullScreen
+                  />
+                ) : (
+                  <div className="relative h-56 flex items-center justify-center bg-black/40 rounded-xl overflow-hidden">
+                    <div className="absolute inset-0 backdrop-blur-md bg-black/40"></div>
+                    <span className="relative z-10 text-lg font-semibold">
+                      🔒 Awaiting Approval
+                    </span>
+                  </div>
+                )}
+
               </div>
-            )}
+            </div>
           </motion.div>
         ))}
       </div>
@@ -167,50 +176,54 @@ export default function RecordedClassesPage() {
       {/* REQUEST SECTION */}
       {isPaid && (
         <>
-          <div className="mt-16 border-t border-white/10 pt-10"></div>
+          <div className="mt-20 border-t border-white/10 pt-12"></div>
 
-          <h2 className="text-2xl font-bold mb-2">
+          <h2 className="text-3xl font-bold mb-3">
             Missed a Live Session?
           </h2>
-          <p className="text-gray-400 mb-6">
-            Tell us the reason. Access is provided responsibly.
+          <p className="text-gray-400 mb-8">
+            Submit your reason to request recording access.
           </p>
 
-          <div className="bg-white/10 p-6 rounded-2xl border border-white/10 max-w-xl">
-            {!submitted ? (
-              <>
-                <textarea
-                  placeholder="Explain why you missed the session..."
-                  className="w-full p-4 h-32 rounded-lg bg-white/20 outline-none text-gray-200 focus:ring-2 focus:ring-blue-500 transition"
-                  onChange={(e) => setReason(e.target.value)}
-                ></textarea>
+          <div className="max-w-2xl p-[1px] rounded-3xl bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30">
+            <div className="bg-[#0B1224] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
 
-                <button
-                  onClick={handleSubmit}
-                  className="mt-4 bg-blue-600 px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-                >
-                  Submit Request
-                </button>
-              </>
-            ) : (
-              <>
-                {requestStatus === "pending" && (
-                  <p className="text-yellow-400 text-lg font-medium">
-                    ⏳ Request submitted. Awaiting admin approval.
-                  </p>
-                )}
-                {requestStatus === "approved" && (
-                  <p className="text-green-400 text-lg font-medium">
-                    ✅ Request approved. You can now watch recordings.
-                  </p>
-                )}
-                {requestStatus === "rejected" && (
-                  <p className="text-red-400 text-lg font-medium">
-                    ❌ Request rejected. Please contact support.
-                  </p>
-                )}
-              </>
-            )}
+              {!submitted ? (
+                <>
+                  <textarea
+                    placeholder="Explain why you missed the session..."
+                    className="w-full p-4 h-32 rounded-xl bg-white/10 outline-none text-gray-200 focus:ring-2 focus:ring-blue-500 transition"
+                    onChange={(e) => setReason(e.target.value)}
+                  ></textarea>
+
+                  <button
+                    onClick={handleSubmit}
+                    className="mt-6 bg-blue-600 px-6 py-3 rounded-xl hover:bg-blue-700 transition font-semibold"
+                  >
+                    Submit Request
+                  </button>
+                </>
+              ) : (
+                <div className="text-lg font-medium">
+                  {requestStatus === "pending" && (
+                    <p className="text-yellow-400">
+                      ⏳ Request submitted. Awaiting approval.
+                    </p>
+                  )}
+                  {requestStatus === "approved" && (
+                    <p className="text-green-400">
+                      ✅ Request approved. You can now watch recordings.
+                    </p>
+                  )}
+                  {requestStatus === "rejected" && (
+                    <p className="text-red-400">
+                      ❌ Request rejected. Please contact support.
+                    </p>
+                  )}
+                </div>
+              )}
+
+            </div>
           </div>
         </>
       )}

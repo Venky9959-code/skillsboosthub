@@ -42,43 +42,59 @@ export default function RegisterPage() {
 
   /* ================= REGISTER ================= */
   const handleRegister = async () => {
-    if (!name || !email || !password || !phone) {
-      setError("Please fill all fields");
-      return;
-    }
+  if (!name || !email || !password || !phone) {
+    setError("Please fill all fields");
+    return;
+  }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
+  if (password.length < 6) {
+    setError("Password must be at least 6 characters");
+    return;
+  }
 
-    try {
-      setLoading(true);
-      setError("");
+  try {
+    setLoading(true);
+    setError("");
 
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-      await setDoc(doc(db, "users", userCredential.user.uid), {
+    await setDoc(doc(db, "users", userCredential.user.uid), {
+      name,
+      email,
+      phone,
+      role: "user",
+      paid: false,
+      createdAt: new Date(),
+    });
+
+    /* SEND WELCOME EMAIL */
+    const response = await fetch("/api/send-welcome-mail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         name,
         email,
-        phone,
-        role: "user",
-        paid: false,
-        createdAt: new Date(),
-      });
+      }),
+    });
 
-      /* 🔥 AUTO LOGIN REDIRECT */
-      router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const data = await response.json();
+    console.log("EMAIL RESPONSE:", data);
+
+    router.push("/account-created");
+
+  } catch (err: any) {
+    console.error("REGISTER ERROR:", err);
+    setError(err.message || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
 
   /* ================= SOCIAL LOGIN ================= */
 
@@ -126,9 +142,26 @@ export default function RegisterPage() {
 
           {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
 
-          <input className={inputStyle} placeholder="Full Name" value={name} onChange={(e)=>setName(e.target.value)} />
-          <input className={inputStyle} placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
-          <input className={inputStyle} placeholder="Phone" value={phone} onChange={(e)=>setPhone(e.target.value)} />
+          <input
+            className={inputStyle}
+            placeholder="Full Name"
+            value={name}
+            onChange={(e)=>setName(e.target.value)}
+          />
+
+          <input
+            className={inputStyle}
+            placeholder="Email"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+          />
+
+          <input
+            className={inputStyle}
+            placeholder="Phone"
+            value={phone}
+            onChange={(e)=>setPhone(e.target.value)}
+          />
 
           {/* PASSWORD */}
           <div className="relative">
@@ -158,17 +191,31 @@ export default function RegisterPage() {
 
           {/* 🔥 ANIMATED GOOGLE STYLE BUTTONS */}
           <div className="mt-5 space-y-3">
-            <motion.button whileHover={{scale:1.05}} onClick={()=>socialLogin(googleProvider)} className={socialBtn}>
+
+            <motion.button
+              whileHover={{scale:1.05}}
+              onClick={()=>socialLogin(googleProvider)}
+              className={socialBtn}
+            >
               <FcGoogle size={20}/> Continue with Google
             </motion.button>
 
-            <motion.button whileHover={{scale:1.05}} onClick={()=>socialLogin(microsoftProvider)} className={socialBtn}>
+            <motion.button
+              whileHover={{scale:1.05}}
+              onClick={()=>socialLogin(microsoftProvider)}
+              className={socialBtn}
+            >
               <FaMicrosoft size={18}/> Continue with Microsoft
             </motion.button>
 
-            <motion.button whileHover={{scale:1.05}} onClick={()=>socialLogin(githubProvider)} className={socialBtn}>
+            <motion.button
+              whileHover={{scale:1.05}}
+              onClick={()=>socialLogin(githubProvider)}
+              className={socialBtn}
+            >
               <FaGithub size={18}/> Continue with GitHub
             </motion.button>
+
           </div>
 
           <p className="text-gray-400 text-sm mt-4">
@@ -178,6 +225,7 @@ export default function RegisterPage() {
             </Link>
           </p>
         </div>
+
       </motion.div>
     </div>
   );

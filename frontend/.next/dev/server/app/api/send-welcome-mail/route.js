@@ -1,0 +1,10 @@
+var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/send-welcome-mail/route.js")
+R.c("server/chunks/9e883_next_ddcd39f6._.js")
+R.c("server/chunks/9e883_@opentelemetry_api_build_esm_8d36f10b._.js")
+R.c("server/chunks/9e883_postal-mime_src_eb4fd580._.js")
+R.c("server/chunks/9e883_svix_dist_6701bce1._.js")
+R.c("server/chunks/9e883_791cc3af._.js")
+R.c("server/chunks/[root-of-the-server]__50126cb7._.js")
+R.c("server/chunks/frontend__next-internal_server_app_api_send-welcome-mail_route_actions_37890a6f.js")
+R.m("[project]/frontend/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/frontend/app/api/send-welcome-mail/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/frontend/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/frontend/app/api/send-welcome-mail/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

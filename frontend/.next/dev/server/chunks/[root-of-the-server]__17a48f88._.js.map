@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 40, "column": 0}, "map": {"version":3,"sources":["file:///D:/Ganesh/frontend/app/api/login-alert/route.ts"],"sourcesContent":["import { NextResponse } from \"next/server\";\r\n\r\nexport async function POST() {\r\n\r\n  return NextResponse.json({\r\n    success: true,\r\n    message: \"Login alert disabled\",\r\n  });\r\n\r\n}"],"names":[],"mappings":";;;;AAAA;;AAEO,eAAe;IAEpB,OAAO,4JAAY,CAAC,IAAI,CAAC;QACvB,SAAS;QACT,SAAS;IACX;AAEF"}}]
+}

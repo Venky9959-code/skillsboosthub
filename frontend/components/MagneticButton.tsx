@@ -1,11 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useRef } from "react";
 
 export default function MagneticButton({
   children,
-  strength = 0.35,
+  strength = 0.4,
   className = "",
   onClick,
 }: {
@@ -16,31 +16,44 @@ export default function MagneticButton({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  // Motion values
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Smooth spring physics
+  const springX = useSpring(x, { stiffness: 150, damping: 15 });
+  const springY = useSpring(y, { stiffness: 150, damping: 15 });
+
   const handleMouseMove = (e: React.MouseEvent) => {
+    // Disable on touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     if (!ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
 
-    ref.current.style.transform = `translate(${x * strength}px, ${
-      y * strength
-    }px)`;
+    const offsetX = e.clientX - rect.left - rect.width / 2;
+    const offsetY = e.clientY - rect.top - rect.height / 2;
+
+    x.set(offsetX * strength);
+    y.set(offsetY * strength);
   };
 
-  const reset = () => {
-    if (!ref.current) return;
-    ref.current.style.transform = "translate(0px, 0px)";
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
   };
 
   return (
     <motion.div
       ref={ref}
+      style={{ x: springX, y: springY }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={reset}
+      onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      whileTap={{ scale: 0.95 }}
-      className={`inline-block cursor-pointer transition-transform duration-150 ${className}`}
+      whileTap={{ scale: 0.94 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 250, damping: 18 }}
+      className={`inline-block cursor-pointer will-change-transform ${className}`}
     >
       {children}
     </motion.div>

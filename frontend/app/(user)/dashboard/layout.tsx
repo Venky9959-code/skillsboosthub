@@ -1,4 +1,6 @@
+
 import PageTransition from "@/components/PageTransition";
+import { ThemeProvider } from "next-themes";
 
 export default function DashboardLayout({
   children,
@@ -6,13 +8,17 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#020617] text-white">
-      <PageTransition>
-        {/* NO SIDEBAR HERE */}
-        <main className="pt-16">
-          {children}
-        </main>
-      </PageTransition>
-    </div>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <div className="min-h-screen bg-white text-black dark:bg-[#020617] dark:text-white">
+        <PageTransition>
+          {/* NO SIDEBAR HERE */}
+          <main className="pt-2">
+            <div className="max-w-7xl mx-auto space-y-16">
+              {children}
+            </div>
+          </main>
+        </PageTransition>
+      </div>
+    </ThemeProvider>
   );
 }

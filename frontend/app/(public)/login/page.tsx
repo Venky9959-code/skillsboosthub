@@ -30,8 +30,11 @@ export default function LoginPage() {
     try {
       setLoading(true);
       setError("");
+
       await signInWithEmailAndPassword(auth, email, password);
+
       router.push("/dashboard");
+
     } catch {
       setError("Invalid email or password");
     } finally {
@@ -43,14 +46,21 @@ export default function LoginPage() {
     try {
       setLoading(true);
       setError("");
+
       await signInWithPopup(auth, provider);
+
       router.push("/dashboard");
+
     } catch {
       setError("Social login failed. Try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
+  const microsoftProvider = new OAuthProvider("microsoft.com");
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#020617] px-4 overflow-hidden">
@@ -124,28 +134,6 @@ export default function LoginPage() {
         </motion.div>
       </motion.div>
     </div>
-  );
-}
-
-function SocialButton({
-  label,
-  icon,
-  onClick,
-}: {
-  label: string;
-  icon: string;
-  onClick: () => void;
-}) {
-  return (
-    <motion.button
-      onClick={onClick}
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.95 }}
-      className="w-full mb-3 py-3 rounded-xl font-semibold bg-white text-black flex items-center justify-center gap-3"
-    >
-      <span className="text-xl">{icon}</span>
-      {label}
-    </motion.button>
   );
 }
 

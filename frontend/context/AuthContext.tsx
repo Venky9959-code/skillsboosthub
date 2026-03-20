@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { updateDoc } from "firebase/firestore"
 import { onAuthStateChanged, User } from "firebase/auth";
 import {
   doc,
@@ -13,7 +14,6 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { auth, db } from "@/firebase/firebaseConfig";
-
 
 type NotificationItem = {
   id: string;
@@ -50,6 +50,25 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
 });
 
+const updateLearningStreak = async () => {
+  if(!user) return
+
+  const today = new Date().toDateString()
+
+  if(profile?.lastLearningDate !== today){
+
+    const newStreak =
+      profile?.lastLearningDate === new Date(Date.now()-86400000).toDateString()
+      ? profile.streakCount + 1
+      : 1
+
+    await updateDoc(doc(db,"users",user.uid),{
+      streakCount:newStreak,
+      lastLearningDate:today
+    })
+  }
+}
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -66,6 +85,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (firebaseUser) {
         const ref = doc(db, "users", firebaseUser.uid);
         const snap = await getDoc(ref);
+
+        /* ================= EXISTING USER ================= */
 
         if (snap.exists()) {
           const data = snap.data();
@@ -87,7 +108,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             notificationSettings: settings,
           });
 
-          // 🔔 REAL-TIME NOTIFICATION LISTENER (MISSING PART)
+          /* 🔔 REALTIME NOTIFICATIONS */
           const q = query(
             collection(db, "notifications"),
             where("userId", "==", firebaseUser.uid),
@@ -107,14 +128,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setNotifications(list);
             setUnreadCount(unread);
 
-            // 🔊 PLAY SOUND FOR NEW NOTIFICATION
             if (settings.sound && unread > 0) {
               const audio = new Audio("/notification.mp3");
               audio.play().catch(() => {});
             }
           });
-        } else {
-          // 👤 CREATE USER PROFILE
+
+          /* 📧 LOGIN ALERT EMAIL */
+          try {
+            await fetch("/api/login-alert", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                userId: firebaseUser.uid,
+                email: firebaseUser.email,
+              }),
+            });
+          } catch (err) {
+            console.error("Login email failed:", err);
+          }
+        }
+
+        /* ================= NEW USER ================= */
+
+        else {
           const newProfile: UserProfile = {
             role: "user",
             paymentStatus: "unpaid",
@@ -135,21 +174,45 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
           setProfile(newProfile);
 
-          // 📩 WELCOME NOTIFICATION
-          await fetch("/api/notify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              type: "register",
-              userId: firebaseUser.uid,
-              email: firebaseUser.email,
-              title: "Welcome to SkillsBoostHub 🎉",
-              message:
-                "Your account has been created successfully. Complete payment to unlock lifetime access.",
-            }),
-          });
+          /* 🔔 WELCOME NOTIFICATION */
+          try {
+            await fetch("/api/notify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                type: "register",
+                userId: firebaseUser.uid,
+                email: firebaseUser.email,
+                title: "Welcome to SkillsBoostHub 🎉",
+                message:
+                  "Your account has been created successfully. Complete payment to unlock lifetime access.",
+              }),
+            });
+          } catch (err) {
+            console.error("Welcome notification failed:", err);
+          }
+
+          /* 📧 WELCOME EMAIL */
+          try {
+            await fetch("/api/send-welcome-mail", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: firebaseUser.email,
+                name: firebaseUser.displayName || "Student",
+              }),
+            });
+          } catch (err) {
+            console.error("Welcome email failed:", err);
+          }
         }
-      } else {
+      }
+
+      /* ================= LOGOUT ================= */
+
+      else {
         setProfile(null);
         setNotifications([]);
         setUnreadCount(0);

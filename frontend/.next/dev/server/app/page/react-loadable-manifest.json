@@ -1,9 +1,9 @@
 {
-  "[project]/node_modules/lottie-react/build/index.umd.js [app-client] (ecmascript, next/dynamic entry)": {
-    "id": "[project]/node_modules/lottie-react/build/index.umd.js [app-client] (ecmascript, next/dynamic entry)",
+  "[project]/frontend/node_modules/lottie-react/build/index.umd.js [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/frontend/node_modules/lottie-react/build/index.umd.js [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/node_modules_7f24c5d4._.js",
-      "static/chunks/node_modules_lottie-react_build_index_umd_d32a0c26.js"
+      "static/chunks/9e883_1d74042a._.js",
+      "static/chunks/9e883_lottie-react_build_index_umd_dc6ebe63.js"
     ]
   }
 }
