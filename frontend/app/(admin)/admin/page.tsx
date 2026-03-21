@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import AdminDashboard from "@/components/AdminDashboard";
 
 export default function AdminPage() {
-  const { user, profile } = useAuth(); // ✅ correct
-  const role = profile?.role;          // ✅ correct
+  const { user, profile } = useAuth();
+  const role = profile?.role;
 
   const router = useRouter();
 
@@ -18,5 +18,5 @@ export default function AdminPage() {
 
   if (role !== "admin") return null;
 
- return <AdminDashboard />;
+  return <AdminDashboard />;
 }
