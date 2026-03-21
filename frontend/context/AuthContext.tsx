@@ -37,7 +37,7 @@ type UserProfile = {
 type AuthContextType = {
   user: User | null;
   profile: UserProfile | null;
-  role: "admin" | "user" | null; // MUST EXIST
+  role: "admin" | "user" | null; // ✅ MUST EXIST
   notifications: NotificationItem[];
   unreadCount: number;
   loading: boolean;
@@ -46,7 +46,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   profile: null,
-  role: null, // ✅ ADDED
+  role: null, // ✅ MUST EXIST
   notifications: [],
   unreadCount: 0,
   loading: true,
