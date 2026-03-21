@@ -13,6 +13,8 @@ export default function DashboardPage() {
   const { user, profile, loading, unreadCount } = useAuth();
   const router = useRouter();
 
+  const nextSession = null; // ✅ ADDED (fix error)
+
   useEffect(() => {
     if (!loading && !user) router.replace("/login");
   }, [user, loading, router]);
@@ -64,10 +66,6 @@ export default function DashboardPage() {
           <Card title="Recorded Sessions" icon="🎥" path="/dashboard/recorded" />
           <Card title="PDFs & Notes" icon="📄" path="/dashboard/pdfs" />
         </div>
-      </div>
-    </div>
-  );
-}
 
         {/* ✅ MOVED INSIDE RETURN */}
         {nextSession && (
@@ -96,6 +94,11 @@ export default function DashboardPage() {
           </motion.div>
 
         )}
+
+      </div>
+    </div>
+  );
+}
 
 function Stat({ title, value }: any) {
   return (
