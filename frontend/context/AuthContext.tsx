@@ -37,6 +37,7 @@ type UserProfile = {
 type AuthContextType = {
   user: User | null;
   profile: UserProfile | null;
+  role: "admin" | "user" | null; // ✅ ADDED
   notifications: NotificationItem[];
   unreadCount: number;
   loading: boolean;
@@ -45,6 +46,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   profile: null,
+  role: null, // ✅ ADDED
   notifications: [],
   unreadCount: 0,
   loading: true,
@@ -86,8 +88,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const ref = doc(db, "users", firebaseUser.uid);
         const snap = await getDoc(ref);
 
-        /* ================= EXISTING USER ================= */
-
         if (snap.exists()) {
           const data = snap.data();
 
@@ -108,7 +108,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             notificationSettings: settings,
           });
 
-          /* 🔔 REALTIME NOTIFICATIONS */
           const q = query(
             collection(db, "notifications"),
             where("userId", "==", firebaseUser.uid),
@@ -134,7 +133,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
           });
 
-          /* 📧 LOGIN ALERT EMAIL */
           try {
             await fetch("/api/login-alert", {
               method: "POST",
@@ -150,8 +148,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             console.error("Login email failed:", err);
           }
         }
-
-        /* ================= NEW USER ================= */
 
         else {
           const newProfile: UserProfile = {
@@ -174,7 +170,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
           setProfile(newProfile);
 
-          /* 🔔 WELCOME NOTIFICATION */
           try {
             await fetch("/api/notify", {
               method: "POST",
@@ -192,7 +187,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             console.error("Welcome notification failed:", err);
           }
 
-          /* 📧 WELCOME EMAIL */
           try {
             await fetch("/api/send-welcome-mail", {
               method: "POST",
@@ -209,8 +203,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           }
         }
       }
-
-      /* ================= LOGOUT ================= */
 
       else {
         setProfile(null);
@@ -232,6 +224,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         user,
         profile,
+        role: profile?.role || null, // ✅ ADDED
         notifications,
         unreadCount,
         loading,
