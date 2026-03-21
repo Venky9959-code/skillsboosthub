@@ -69,32 +69,33 @@ export default function DashboardPage() {
   );
 }
 
-{nextSession && (
+        {/* ✅ MOVED INSIDE RETURN */}
+        {nextSession && (
 
-<motion.div className="rounded-2xl bg-white/10 p-6">
+          <motion.div className="rounded-2xl bg-white/10 p-6">
 
-<h3 className="text-xl font-semibold">
-Next Live Session
-</h3>
+            <h3 className="text-xl font-semibold">
+              Next Live Session
+            </h3>
 
-<p className="text-gray-400">
-{nextSession.title}
-</p>
+            <p className="text-gray-400">
+              {nextSession.title}
+            </p>
 
-<p className="text-sm">
-{nextSession.date} • {nextSession.time}
-</p>
+            <p className="text-sm">
+              {nextSession.date} • {nextSession.time}
+            </p>
 
-<a
-href={nextSession.meetingLink}
-className="text-blue-400"
->
-Join Session
-</a>
+            <a
+              href={nextSession.meetingLink}
+              className="text-blue-400"
+            >
+              Join Session
+            </a>
 
-</motion.div>
+          </motion.div>
 
-)}
+        )}
 
 function Stat({ title, value }: any) {
   return (
