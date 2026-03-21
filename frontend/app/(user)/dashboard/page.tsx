@@ -13,7 +13,7 @@ export default function DashboardPage() {
   const { user, profile, loading, unreadCount } = useAuth();
   const router = useRouter();
 
-  const nextSession = null; // ✅ ADDED (fix error)
+  const nextSession: any = null; // ✅ ADDED (fix error)
 
   useEffect(() => {
     if (!loading && !user) router.replace("/login");
