@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+
 const courses = [
   {
     title: "Full Stack Web Development",
