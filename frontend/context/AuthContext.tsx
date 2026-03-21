@@ -51,8 +51,8 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
 });
 
-const updateLearningStreak = async () => {
-  if(!user) return
+const updateLearningStreak = async (user: any, profile: any) => {
+  if (!user) return;
 
   const today = new Date().toDateString()
 
