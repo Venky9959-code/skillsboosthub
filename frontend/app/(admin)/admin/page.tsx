@@ -18,5 +18,4 @@ export default function AdminPage() {
 
   if (role !== "admin") return null;
 
-  return <AdminDashboard />;
-}
+  return <AdminDashboard />;  }
