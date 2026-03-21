@@ -1,5 +1,17 @@
 {
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
   "dependencies": {
-    "nodemailer": "^8.0.1"
+    "firebase": "latest",
+    "next": "latest",
+    "nodemailer": "^8.0.3",
+    "react": "latest",
+    "react-dom": "latest"
   }
 }
