@@ -72,17 +72,17 @@ const heroContainer = {
 };
 
 const heroItem = {
-  hidden: { opacity: 0, y: 40, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
   show: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-   transition: {
-  duration: 0.6,
-  ease: "easeInOut" as any,
+    transition: {
+      duration: 0.6,
+      ease: "easeInOut" as any,
     },
+  },
 };
-}
 
 /* ================= HOME PAGE ================= */
 export default function Home() {
