@@ -23,11 +23,6 @@ const courses = [
   },
 ];
 
-
-
-
-
-
 export default function CoursesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#020617] to-[#0A1220] px-6 py-16 text-white">
