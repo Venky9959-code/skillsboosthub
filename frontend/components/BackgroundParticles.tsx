@@ -27,8 +27,8 @@ export default function BackgroundParticles() {
       speedY: number;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * canvas!.width;   // ✅ FIXED
+        this.y = Math.random() * canvas!.height;  // ✅ FIXED
         this.size = Math.random() * 2 + 1;
         this.speedX = (Math.random() - 0.5) * 0.3;
         this.speedY = (Math.random() - 0.5) * 0.3;
@@ -38,8 +38,8 @@ export default function BackgroundParticles() {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        if (this.x < 0 || this.x > canvas!.width) this.speedX *= -1;   // ✅ FIXED
+        if (this.y < 0 || this.y > canvas!.height) this.speedY *= -1;  // ✅ FIXED
       }
 
       draw() {
@@ -55,7 +55,7 @@ export default function BackgroundParticles() {
     }
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas!.width, canvas!.height); // ✅ FIXED
 
       particles.forEach((particle) => {
         particle.update();
@@ -68,8 +68,8 @@ export default function BackgroundParticles() {
     animate();
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas!.width = window.innerWidth;   // ✅ FIXED
+      canvas!.height = window.innerHeight; // ✅ FIXED
     };
 
     window.addEventListener("resize", handleResize);
