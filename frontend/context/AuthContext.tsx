@@ -25,6 +25,7 @@ type NotificationItem = {
 };
 
 type UserProfile = {
+   name?: string;
   role: "admin" | "user";
   paymentStatus: "paid" | "unpaid";
   notificationSettings?: {
