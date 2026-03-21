@@ -43,10 +43,10 @@ export default function BackgroundParticles() {
       }
 
       draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(99, 102, 241, 0.15)";
-        ctx.fill();
+        ctx!.beginPath();
+        ctx!.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx!.fillStyle = "rgba(99, 102, 241, 0.15)";
+        ctx!.fill();
       }
     }
 
