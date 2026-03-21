@@ -65,7 +65,7 @@ export default function NotificationsPage() {
       setLoadingData(false);
 
       // Detect newest unread
-      const newestUnread = data.find((n: any) => !n.read);
+      const newestUnread = data.find((n: any) => !n.read) as any;
 
       if (newestUnread) {
         // Toast
