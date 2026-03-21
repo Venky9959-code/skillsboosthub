@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { collection, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../../firebase/firebaseConfig";
+import { db } from "@/firebase/firebaseConfig";
 
 export default function BroadcastPage() {
   const [title, setTitle] = useState("");
