@@ -77,8 +77,10 @@ const heroItem = {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.7, ease: "easeInOut",},
-  },
+   transition: {
+  duration: 0.6,
+  ease: "easeInOut" as any,
+    },
 };
 
 /* ================= HOME PAGE ================= */
