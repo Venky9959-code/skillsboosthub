@@ -37,7 +37,7 @@ type UserProfile = {
 type AuthContextType = {
   user: User | null;
   profile: UserProfile | null;
-  role: "admin" | "user" | null; // ✅ ADDED
+  role: "admin" | "user" | null; // MUST EXIST
   notifications: NotificationItem[];
   unreadCount: number;
   loading: boolean;
