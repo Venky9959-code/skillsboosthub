@@ -82,6 +82,7 @@ const heroItem = {
   ease: "easeInOut" as any,
     },
 };
+}
 
 /* ================= HOME PAGE ================= */
 export default function Home() {
