@@ -17,11 +17,8 @@ import { auth, db } from "@/firebase/firebaseConfig";
 
 type NotificationItem = {
   id: string;
-  title: string;
-  message: string;
-  type: string;
-  read: boolean;
-  createdAt: any;
+  title?: string;
+  message?: string;
 };
 
 type UserProfile = {
