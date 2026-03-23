@@ -1,21 +1,25 @@
 export default function Privacy() {
   return (
-    <div style={{ padding: "60px 20px", textAlign: "center" }}>
-      <h1>Privacy Policy</h1>
+    <div style={{ padding: "60px 20px", textAlign: "center", color: "#fff" }}>
+      <h1 style={{ marginBottom: "30px" }}>Privacy Policy</h1>
 
       <div
         style={{
-          background: "#111",
+          background: "rgba(255,255,255,0.05)", // 🔥 glass effect
+          backdropFilter: "blur(10px)",
           padding: "30px",
-          borderRadius: "12px",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+          borderRadius: "16px",
           maxWidth: "600px",
           margin: "auto",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
+          border: "1px solid rgba(255,255,255,0.1)",
         }}
       >
-        <p>We respect your privacy.</p>
+        <p style={{ marginBottom: "20px", fontSize: "18px" }}>
+          We respect your privacy.
+        </p>
 
-        <ul style={{ textAlign: "left", marginTop: "20px" }}>
+        <ul style={{ textAlign: "left", lineHeight: "1.8" }}>
           <li>✔ We collect basic user info</li>
           <li>✔ We never sell your data</li>
           <li>✔ Payments are secure via Razorpay</li>
