@@ -1,10 +1,24 @@
 export default function Shipping() {
   return (
-    <div className="container">
-      <h1>Shipping Policy</h1>
-      <p className="subtitle">Digital Delivery Information</p>
+    <div style={{ padding: "60px 20px", textAlign: "center" }}>
+      <h1 style={{ fontSize: "36px", marginBottom: "10px" }}>
+        Shipping Policy
+      </h1>
 
-      <div className="card">
+      <p style={{ color: "#666", marginBottom: "30px" }}>
+        Digital Delivery Information
+      </p>
+
+      <div
+        style={{
+          background: "#fff",
+          padding: "30px",
+          borderRadius: "15px",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.1)",
+          maxWidth: "600px",
+          margin: "auto",
+        }}
+      >
         <h3>📦 Nature of Product</h3>
         <p>
           SkillsBoostHub provides only digital products such as online courses
@@ -34,36 +48,6 @@ export default function Shipping() {
           <strong>support@skillsboosthub.com</strong>
         </p>
       </div>
-
-      <style jsx>{`
-        .container {
-          padding: 60px 20px;
-          text-align: center;
-        }
-        h1 {
-          font-size: 36px;
-          margin-bottom: 10px;
-        }
-        .subtitle {
-          color: #666;
-          margin-bottom: 30px;
-        }
-        .card {
-          background: #fff;
-          padding: 30px;
-          border-radius: 15px;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-          max-width: 600px;
-          margin: auto;
-          transition: 0.3s;
-        }
-        .card:hover {
-          transform: translateY(-5px);
-        }
-        h3 {
-          margin-top: 20px;
-        }
-      `}</style>
     </div>
   );
 }
