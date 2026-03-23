@@ -19,6 +19,7 @@ export default function Shipping() {
           margin: "auto",
           boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
           border: "1px solid rgba(255,255,255,0.1)",
+          textAlign: "left",
         }}
       >
         <h3>📦 Nature of Product</h3>
