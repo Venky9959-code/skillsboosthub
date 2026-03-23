@@ -20,7 +20,7 @@ function SuccessContent() {
           style={{
             padding: "12px 25px",
             background: "#22c55e",
-            color: "#fff",
+            color: "#111",
             border: "none",
             borderRadius: "8px",
             cursor: "pointer",

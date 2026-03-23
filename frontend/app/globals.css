@@ -213,7 +213,7 @@ html {
 }
 
 .card {
-  background: #fff;
+  background: #111;
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.1);
@@ -222,6 +222,6 @@ html {
 }
 
 .subtitle {
-  color: #666;
+  color: #111;
   margin-bottom: 30px;
 }
