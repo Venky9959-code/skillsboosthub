@@ -1,8 +1,9 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function Success() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("payment_id");
 
@@ -30,5 +31,13 @@ export default function Success() {
         </button>
       </a>
     </div>
+  );
+}
+
+export default function Success() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <SuccessContent />
+    </Suspense>
   );
 }
