@@ -5,7 +5,7 @@ export default function Privacy() {
 
       <div
         style={{
-          background: "#fff",
+          background: "#111",
           padding: "30px",
           borderRadius: "12px",
           boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
