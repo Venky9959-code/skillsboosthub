@@ -6,6 +6,7 @@ export default function Footer() {
         <a href="/terms">Terms</a>
         <a href="/privacy">Privacy</a>
         <a href="/refund">Refund</a>
+        <a href="/shipping">Shipping</a>
       </div>
 
       <p>© 2026 SkillsBoostHub. All rights reserved.</p>
