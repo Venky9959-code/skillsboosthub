@@ -1,3 +1,5 @@
+import { cardStyle } from "@/lib/styles";
+
 export default function Refund() {
   const sections = [
     {
@@ -40,3 +42,4 @@ export default function Refund() {
     </div>
   );
 }
+
