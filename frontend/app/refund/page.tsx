@@ -1,19 +1,23 @@
 export default function Refund() {
   return (
-    <div style={{ padding: "60px 20px", textAlign: "center" }}>
-      <h1>Refund Policy</h1>
+    <div style={{ padding: "60px 20px", textAlign: "center", color: "#fff" }}>
+      <h1 style={{ marginBottom: "30px" }}>Refund Policy</h1>
 
       <div
         style={{
-          background: "#fff",
+          background: "rgba(255,255,255,0.05)", // 🔥 glass effect
+          backdropFilter: "blur(10px)",
           padding: "30px",
-          borderRadius: "12px",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+          borderRadius: "16px",
           maxWidth: "600px",
           margin: "auto",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
+          border: "1px solid rgba(255,255,255,0.1)",
         }}
       >
-        <p>All products are digital.</p>
+        <p style={{ marginBottom: "20px" }}>
+          All products are digital.
+        </p>
 
         <h3>❌ No Cancellation</h3>
         <p>Orders cannot be cancelled after payment.</p>
