@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import TopLoader from "@/components/TopLoader";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -72,6 +73,7 @@ export default function RootLayout({
             </AnimatePresence>
           </AuthProvider>
         </ThemeProvider>
+         <Footer />
       </body>
     </html>
   );
