@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "tailwindcss";
+
+/* ===============================
+   🌌 ULTRA PREMIUM BACKGROUND SYSTEM
+================================ */
+
+:root {
+  --bg-main: #020617;
+  --bg-card: #0f172a;
+  --border-subtle: rgba(255,255,255,0.08);
+  --text-muted: #9ca3af;
+}
+
+/* ✅ FIXED BODY (CORRECT) */
+body {
+  background: radial-gradient(
+      circle at 20% 30%,
+      rgba(59,130,246,0.08),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(168,85,247,0.08),
+      transparent 40%
+    ),
+    #020617;
+}
+
+/* Animated mesh gradient */
+.background-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(59,130,246,0.15), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(168,85,247,0.15), transparent 40%);
+  animation: meshMove 12s ease-in-out infinite alternate;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+@keyframes meshMove {
+  0% {
+    transform: translate3d(0,0,0) scale(1);
+  }
+  100% {
+    transform: translate3d(-40px,20px,0) scale(1.1);
+  }
+}
+
+/* Ambient glow layer */
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    radial-gradient(
+      500px at var(--x) var(--y),
+      rgba(59,130,246,0.18),
+      transparent 40%
+    ),
+    radial-gradient(
+      900px at var(--x) var(--y),
+      rgba(168,85,247,0.10),
+      transparent 60%
+    );
+
+  transition: background 0.08s linear;
+}
+
+/* ===============================
+   🌊 Smooth Scroll
+================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,#334155,#1e293b);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===============================
+   ✨ FADE & FLOAT ANIMATIONS
+================================ */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ===============================
+   🔥 PREMIUM BUTTON SYSTEM
+================================ */
+
+.btn-primary {
+  position: relative;
+  isolation: isolate;
+  transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    rgba(59,130,246,0.45),
+    rgba(99,102,241,0.45),
+    rgba(168,85,247,0.45)
+  );
+  opacity: 0;
+  z-index: -1;
+  filter: blur(16px);
+  transition: opacity 0.35s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 20px 40px rgba(59,130,246,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.15);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+/* ===============================
+   💎 CARD GLASS SYSTEM
+================================ */
+
+.glass-card {
+  background: rgba(15,23,42,0.6);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.4s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+/* ===============================
+   🎯 Focus States
+================================ */
+
+:focus-visible {
+  outline: 2px solid rgba(59,130,246,0.8);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ===============================
+   📱 Mobile Safe
+================================ */
+
+@media (pointer: coarse) {
+  .btn-primary:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.magnetic-hover {
+  transition: filter 0.3s ease;
+}
+
+.magnetic-hover:hover {
+  filter: brightness(1.08);
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientMove 4s linear infinite alternate;
+}
+
+.container {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.card {
+  background: #111;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: auto;
+}
+
+.subtitle {
+  color: #111;
+  margin-bottom: 30px;
+}
