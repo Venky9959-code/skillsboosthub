@@ -125,13 +125,18 @@ function Navbar() {
             <div className="relative">
 
               <Image
-                src="/logo.png"
-                alt="SkillsBoostHub"
-                width={58}
-                height={58}
-                priority
-                 className="object-contain drop-shadow-[0_0_18px_rgba(59,130,246,0.7)] transition duration-300 group-hover:scale-105"
-                     />
+               src="/logo.png"
+               alt="SkillsBoostHub"
+               width={70}
+               height={70}
+               priority
+               className="
+                  w-[70px] h-[70px]
+                      object-cover
+                        rounded-full
+                         drop-shadow-[0_0_18px_rgba(59,130,246,0.7)]
+                           transition duration-300
+                             group-hover:scale-105"/>
 
               {/* Glow */}
               <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-2xl opacity-0 group-hover:opacity-100 transition duration-500" />
