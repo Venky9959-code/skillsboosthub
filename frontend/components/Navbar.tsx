@@ -294,7 +294,7 @@ function Navbar() {
                       </p>
 
                       <p className="text-xs text-gray-400 mt-1">
-                        {profile?.email || "Welcome back"}
+                         {user?.email || "Welcome back"}
                       </p>
                     </div>
 
