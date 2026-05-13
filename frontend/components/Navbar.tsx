@@ -125,7 +125,7 @@ function Navbar() {
             <div className="relative">
 
               <Image
-  src="/logo-new.png"
+  src="/logo-neww.png"
   alt="SkillsBoostHub"
   width={58}
   height={58}
