@@ -48,7 +48,9 @@ function Navbar() {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+
     window.addEventListener("scroll", onScroll);
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -74,7 +76,9 @@ function Navbar() {
         setAvatarOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handler);
+
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
@@ -94,27 +98,74 @@ function Navbar() {
         className={`
           fixed top-0 inset-x-0 z-50
           transition-all duration-500
-          ${scrolled
-            ? "h-14 backdrop-blur-3xl bg-white/70 dark:bg-[#0B1224]/70 shadow-xl"
-            : "h-16 bg-white/50 dark:bg-[#0B1224]/50"}
           border-b border-white/10
+
+          ${
+            scrolled
+              ? "h-16 backdrop-blur-2xl bg-[#020617]/80 shadow-[0_8px_40px_rgba(0,0,0,0.45)]"
+              : "h-20 bg-[#020617]/60 backdrop-blur-xl"
+          }
         `}
       >
-        <div className="max-w-7xl mx-auto h-full px-6 lg:px-10 flex items-center justify-between">
+        {/* Ambient Glow */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-20 left-20 w-72 h-72 bg-blue-500/10 blur-[120px] rounded-full" />
+
+          <div className="absolute -top-20 right-20 w-72 h-72 bg-purple-500/10 blur-[120px] rounded-full" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto h-full px-6 lg:px-10 flex items-center justify-between">
 
           {/* LOGO */}
-          <Link href="/dashboard/home" className="flex items-center gap-2 group relative">
+          <Link
+            href="/dashboard/home"
+            className="flex items-center gap-4 group relative"
+          >
+            {/* LOGO IMAGE */}
             <div className="relative">
-              <Image src="/logo.png" alt="SkillsBoostHub" width={34} height={34} />
-              <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-xl opacity-0 group-hover:opacity-100 transition" />
+
+              <Image
+                src="/logo-new.png"
+                alt="SkillsBoostHub"
+                width={58}
+                height={58}
+                priority
+                className="object-contain drop-shadow-[0_0_18px_rgba(59,130,246,0.7)] transition duration-300 group-hover:scale-105"
+              />
+
+              {/* Glow */}
+              <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-2xl opacity-0 group-hover:opacity-100 transition duration-500" />
             </div>
-            <span className="text-lg font-bold tracking-wide group-hover:text-blue-400 transition">
-              Skills<span className="text-blue-400">Boost</span>Hub
-            </span>
+
+            {/* BRAND */}
+            <div className="flex flex-col leading-tight">
+
+              <h1 className="text-[30px] font-extrabold tracking-tight">
+
+                <span className="text-white">
+                  Skills
+                </span>
+
+                <span className="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
+                  Boost
+                </span>
+
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  Hub
+                </span>
+
+              </h1>
+
+              <p className="text-[11px] uppercase tracking-[4px] text-gray-400">
+                Learn • Grow • Succeed
+              </p>
+
+            </div>
           </Link>
 
           {/* DESKTOP NAV */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-7">
+
             {navItems.map(item => {
               const locked = !item.free && !isPaid;
               const active = pathname === item.href;
@@ -126,20 +177,36 @@ function Navbar() {
                     className={`
                       relative text-sm font-medium tracking-wide
                       transition-all duration-300
-                      ${locked
-                        ? "text-gray-500 cursor-not-allowed"
-                        : "text-gray-300 hover:text-white"}
+
+                      ${
+                        locked
+                          ? "text-gray-500 cursor-not-allowed"
+                          : active
+                          ? "text-white"
+                          : "text-gray-300 hover:text-white"
+                      }
                     `}
                   >
-                    {item.label} {locked && "🔒"}
+                    <span className="relative z-10">
+                      {item.label} {locked && "🔒"}
+                    </span>
 
+                    {/* ACTIVE GLOW */}
                     {active && (
-                      <motion.span
-                        layoutId="nav-underline"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                        className="absolute -bottom-2 left-0 right-0 h-[2px] 
-                        bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
-                      />
+                      <>
+                        <motion.span
+                          layoutId="nav-underline"
+                          transition={{
+                            type: "spring",
+                            stiffness: 380,
+                            damping: 30,
+                          }}
+                          className="absolute -bottom-2 left-0 right-0 h-[2px]
+                          bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
+                        />
+
+                        <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full -z-10" />
+                      </>
                     )}
                   </Link>
                 </MagneticButton>
@@ -150,28 +217,43 @@ function Navbar() {
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-4">
 
+            {/* THEME */}
             {mounted && (
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="text-lg hover:rotate-12 transition"
+                onClick={() =>
+                  setTheme(theme === "dark" ? "light" : "dark")
+                }
+                className="w-10 h-10 rounded-full
+                bg-white/5 border border-white/10
+                flex items-center justify-center
+                backdrop-blur-xl hover:bg-white/10
+                transition duration-300"
               >
-                {theme === "dark" ? "🌙" : "☀️"}
+                <span className="text-lg">
+                  {theme === "dark" ? "🌙" : "☀️"}
+                </span>
               </motion.button>
             )}
 
-            {/* Notification */}
+            {/* NOTIFICATIONS */}
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => router.push("/dashboard/notifications")}
-              className="relative text-lg"
+              className="relative w-10 h-10 rounded-full
+              bg-white/5 border border-white/10
+              flex items-center justify-center
+              backdrop-blur-xl hover:bg-white/10
+              transition duration-300"
             >
               🔔
+
               {unreadCount > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-1 -right-2 text-[10px] bg-red-500 text-white px-1.5 rounded-full"
+                  className="absolute -top-1 -right-1 text-[10px]
+                  bg-red-500 text-white px-1.5 py-0.5 rounded-full"
                 >
                   {unreadCount}
                 </motion.span>
@@ -180,13 +262,15 @@ function Navbar() {
 
             {/* AVATAR */}
             <div ref={avatarRef} className="relative">
+
               <motion.button
                 whileTap={{ scale: 0.92 }}
                 onClick={() => setAvatarOpen(v => !v)}
-                className="relative w-9 h-9 rounded-full 
-                bg-gradient-to-br from-blue-500 to-purple-600
+                className="relative w-11 h-11 rounded-full
+                bg-gradient-to-br from-blue-500 via-cyan-500 to-purple-600
                 flex items-center justify-center text-sm font-bold
-                shadow-lg hover:shadow-blue-500/40 transition"
+                shadow-[0_0_25px_rgba(59,130,246,0.45)]
+                hover:scale-105 transition duration-300"
               >
                 {profile?.name?.[0] || "U"}
               </motion.button>
@@ -198,43 +282,109 @@ function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 12, scale: 0.96 }}
                     transition={{ duration: 0.25 }}
-                    className="absolute right-0 mt-3 w-48 
-                     bg-white/95 dark:bg-[#0B1224]/95 backdrop-blur-2xl
-                      border border-white/10 rounded-xl overflow-hidden
-                      shadow-2xl"
+                    className="absolute right-0 mt-4 w-56
+                    bg-[#0B1224]/95 backdrop-blur-2xl
+                    border border-white/10 rounded-2xl overflow-hidden
+                    shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
                   >
-                    <Link href="/dashboard/profile" className="block px-4 py-3 hover:bg-white/10">
-                      Profile
-                    </Link>
 
-                    <Link href="/dashboard/home" className="block px-4 py-3 hover:bg-white/10">
-                      Dashboard
-                    </Link>
+                    <div className="px-4 py-4 border-b border-white/5">
+                      <p className="text-sm font-semibold text-white">
+                        {profile?.name || "User"}
+                      </p>
 
-                    {/* ✅ ONLY CHANGE HERE */}
-                    {profile && (
-                      isPaidUser ? (
-                        <div className="mx-4 my-2 px-4 py-2 rounded-lg bg-green-500/20 text-green-400 font-semibold text-center">
-                          💎 Premium Active
-                        </div>
-                      ) : (
-                        <MagneticButton>
-                          <Link
-                            href="/dashboard/payment"
-                            className="block mx-4 my-2 bg-yellow-400 text-black px-4 py-2 rounded-lg font-semibold text-center hover:scale-105 transition"
-                          >
-                            Unlock ₹198
-                          </Link>
-                        </MagneticButton>
-                      )
-                    )}
+                      <p className="text-xs text-gray-400 mt-1">
+                        {profile?.email || "Welcome back"}
+                      </p>
+                    </div>
 
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-3 hover:bg-white/10"
+                    <Link
+                      href="/dashboard/profile"
+                      className="block px-4 py-3 hover:bg-white/5 transition"
                     >
-                      Logout
-                    </button>
+                      👤 Profile
+                    </Link>
+
+                    <Link
+                      href="/dashboard/home"
+                      className="block px-4 py-3 hover:bg-white/5 transition"
+                    >
+                      🏠 Dashboard
+                    </Link>
+{/* PREMIUM */}
+{profile && (
+  isPaidUser ? (
+    <div className="px-4 mt-4">
+      <div
+        className="
+          flex items-center justify-center gap-3
+          w-full
+          py-4
+          rounded-2xl
+          bg-gradient-to-r from-emerald-500/20 to-green-500/10
+          border border-emerald-400/20
+          text-emerald-400
+          font-semibold
+          text-lg
+          shadow-[0_0_25px_rgba(16,185,129,0.15)]
+        "
+      >
+        <span className="text-xl">💎</span>
+
+        <span>Premium Active</span>
+      </div>
+    </div>
+  ) : (
+    <MagneticButton>
+      <Link
+        href="/dashboard/payment"
+        className="
+          block mx-4 mt-4
+          bg-gradient-to-r from-yellow-400 to-orange-500
+          text-black px-4 py-3 rounded-2xl
+          font-semibold text-center
+          shadow-lg hover:scale-[1.02]
+          transition duration-300
+        "
+      >
+        Unlock Premium ₹198
+      </Link>
+    </MagneticButton>
+  )
+)}
+
+{/* LOGOUT */}
+<button
+  onClick={handleLogout}
+  className="
+    w-full
+    flex items-center gap-3
+    px-5 py-4 mt-4
+    text-red-400
+    hover:bg-red-500/10
+    hover:text-red-300
+    transition duration-300
+    text-lg font-medium
+    rounded-xl
+  "
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={2}
+    stroke="currentColor"
+    className="w-5 h-5"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3-3l-3-3m3 3l-3 3m3-3H9"
+    />
+  </svg>
+
+  <span>Logout</span>
+</button>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -244,7 +394,10 @@ function Navbar() {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setMenuOpen(v => !v)}
-              className="md:hidden text-xl"
+              className="md:hidden w-10 h-10 rounded-full
+              bg-white/5 border border-white/10
+              flex items-center justify-center
+              backdrop-blur-xl"
             >
               ☰
             </motion.button>
@@ -259,15 +412,16 @@ function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden border-t border-white/10 
-             bg-white/95 dark:bg-[#0B1224]/95 backdrop-blur-2xl"
+              className="md:hidden border-t border-white/10
+              bg-[#0B1224]/95 backdrop-blur-2xl"
             >
               {navItems.map(item => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block px-6 py-3 text-sm text-gray-300 hover:bg-white/10"
+                  className="block px-6 py-4 text-sm
+                  text-gray-300 hover:bg-white/5 transition"
                 >
                   {item.label}
                 </Link>
